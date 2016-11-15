@@ -7,21 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D5B750B5D9A0C782B6253AC /* Pods_Icebreaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */; };
 		DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4F99941DDB817E000DDC68 /* AppDelegate.swift */; };
-		DA4F99971DDB817E000DDC68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4F99961DDB817E000DDC68 /* ViewController.swift */; };
 		DA4F999A1DDB817E000DDC68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F99981DDB817E000DDC68 /* Main.storyboard */; };
 		DA4F999C1DDB817E000DDC68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999B1DDB817E000DDC68 /* Assets.xcassets */; };
 		DA4F999F1DDB817E000DDC68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999D1DDB817E000DDC68 /* LaunchScreen.storyboard */; };
+		DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355CF1DDB825500909B6F /* LoginViewController.swift */; };
+		DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D11DDB827700909B6F /* MapViewController.swift */; };
+		DAB355D41DDB82BE00909B6F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DAB355D31DDB82BE00909B6F /* Podfile */; };
+		DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D51DDB82F000909B6F /* NewUserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1348EEC1A33528F9E967D85F /* Pods-Icebreaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.release.xcconfig"; sourceTree = "<group>"; };
+		67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Icebreaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5CF40E59501EDF1496BB043 /* Pods-Icebreaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.debug.xcconfig"; sourceTree = "<group>"; };
 		DA4F99911DDB817E000DDC68 /* Icebreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Icebreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4F99941DDB817E000DDC68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DA4F99961DDB817E000DDC68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DA4F99991DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA4F999B1DDB817E000DDC68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4F999E1DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4F99A01DDB817E000DDC68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAB355CF1DDB825500909B6F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DAB355D11DDB827700909B6F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DAB355D31DDB82BE00909B6F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DAB355D51DDB82F000909B6F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +39,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D5B750B5D9A0C782B6253AC /* Pods_Icebreaker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F8FD6063324A60D7F00973A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D24BCDD00B0298E8BD39DF7B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A5CF40E59501EDF1496BB043 /* Pods-Icebreaker.debug.xcconfig */,
+				1348EEC1A33528F9E967D85F /* Pods-Icebreaker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DA4F99881DDB817D000DDC68 = {
 			isa = PBXGroup;
 			children = (
+				DAB355D31DDB82BE00909B6F /* Podfile */,
 				DA4F99931DDB817E000DDC68 /* Icebreaker */,
 				DA4F99921DDB817E000DDC68 /* Products */,
+				D24BCDD00B0298E8BD39DF7B /* Pods */,
+				1F8FD6063324A60D7F00973A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,7 +86,9 @@
 			isa = PBXGroup;
 			children = (
 				DA4F99941DDB817E000DDC68 /* AppDelegate.swift */,
-				DA4F99961DDB817E000DDC68 /* ViewController.swift */,
+				DAB355D11DDB827700909B6F /* MapViewController.swift */,
+				DAB355CF1DDB825500909B6F /* LoginViewController.swift */,
+				DAB355D51DDB82F000909B6F /* NewUserViewController.swift */,
 				DA4F99981DDB817E000DDC68 /* Main.storyboard */,
 				DA4F999B1DDB817E000DDC68 /* Assets.xcassets */,
 				DA4F999D1DDB817E000DDC68 /* LaunchScreen.storyboard */,
@@ -71,9 +104,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA4F99A31DDB817E000DDC68 /* Build configuration list for PBXNativeTarget "Icebreaker" */;
 			buildPhases = (
+				A248DCE4E7E2B18379A26775 /* [CP] Check Pods Manifest.lock */,
 				DA4F998D1DDB817E000DDC68 /* Sources */,
 				DA4F998E1DDB817E000DDC68 /* Frameworks */,
 				DA4F998F1DDB817E000DDC68 /* Resources */,
+				A4C0290C1C298081D24173A9 /* [CP] Embed Pods Frameworks */,
+				74F1EBFD589455727A3ED841 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -126,19 +162,70 @@
 			files = (
 				DA4F999F1DDB817E000DDC68 /* LaunchScreen.storyboard in Resources */,
 				DA4F999C1DDB817E000DDC68 /* Assets.xcassets in Resources */,
+				DAB355D41DDB82BE00909B6F /* Podfile in Resources */,
 				DA4F999A1DDB817E000DDC68 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		74F1EBFD589455727A3ED841 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A248DCE4E7E2B18379A26775 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A4C0290C1C298081D24173A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DA4F998D1DDB817E000DDC68 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA4F99971DDB817E000DDC68 /* ViewController.swift in Sources */,
+				DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */,
+				DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */,
 				DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */,
+				DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +269,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -231,6 +319,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -257,6 +346,7 @@
 		};
 		DA4F99A41DDB817E000DDC68 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5CF40E59501EDF1496BB043 /* Pods-Icebreaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6Q9UDY3K2L;
@@ -270,6 +360,7 @@
 		};
 		DA4F99A51DDB817E000DDC68 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1348EEC1A33528F9E967D85F /* Pods-Icebreaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6Q9UDY3K2L;
@@ -300,6 +391,7 @@
 				DA4F99A51DDB817E000DDC68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
