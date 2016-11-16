@@ -86,34 +86,65 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         guard usrField.hasText && passwordField.hasText else { //Check that both username and password are entered
             
             //The message that alert will show
-            var message:String
-            
-            //The alert that will popup, the message isn't initialized, but message is an optional anyways so it's fine, regardless
-            //let alert = UIAlertController(title: "Enter username and password!", message: message, preferredStyle: .alert)
             
             //The OK button for alert
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             
             if !usrField.hasText && !passwordField.hasText { //User has not entered the username or password
                 //I can buy this one, maybe they wanted to test it
-                message = "Your username and password are blank! Please enter them in, if you don't have a username or password, create a new user!"
-                //self.present(alert, animated: true, completion: nil)
+                
+                let message = "Your username and password are blank! Please enter them in, if you don't have a username or password, create a new user!"
+                let alert = UIAlertController(title: "Enter username and password!", message: message, preferredStyle: .alert)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             if usrField.hasText && !passwordField.hasText { //User has entered the username but not the password
                 //I can also buy this one, I'll admit I've done this one before by accident
-                message = "You didn't enter a password! Please enter it to continue"
-                //self.present(alert, animated: true, completion: nil)
+                let message = "You didn't enter a password! Please enter it to continue"
+                let alert = UIAlertController(title: "Enter username and password!", message: message, preferredStyle: .alert)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             if !usrField.hasText && passwordField.hasText { //User has not entered the username but has entered the password
                 //Now this one, I can't buy this one.  Why would this even happen?
-                message = "Your username is blank! Please enter it to continue."
-                //self.present(alert, animated: true, completion: nil)
+                let message = "Your username is blank! Please enter it to continue."
+                let alert = UIAlertController(title: "Enter username and password!", message: message, preferredStyle: .alert)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             return
         }
         
+        //Username user provided
+        let userGiven = usrField.text
+        
+        //Password user provided
+        let passGiven = passwordField.text
+        
+        //URL that will receive the username and password and check it against the database
+        let url = "http://192.168.1.214:8000/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
+        
+        
+        //Use Alamofire for http get request and check if username and password are correct
+        Alamofire.request(url).responseString { response in
+            print(response)
+            if response.result.value == "1" {
+                print("Good, login")
+                let mvc = MapViewController()
+                self.present(mvc, animated: true, completion: nil)
+            }
+            else {
+                print("Bad, no login")
+                let alert = UIAlertController(title: "Uh-oh!", message: "The username or password is wrong!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        }
+
     }
     
     
