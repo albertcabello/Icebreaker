@@ -7,7 +7,7 @@
 //
 import UIKit
 import Alamofire
-import SwiftyJSON
+
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -125,7 +125,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let passGiven = passwordField.text
         
         //URL that will receive the username and password and check it against the database
-        let url = "http://192.168.1.214:8000/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
+        let url = "http://localhost:8000/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
         
         
         //Use Alamofire for http get request and check if username and password are correct
@@ -133,7 +133,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             print(response)
             if response.result.value == "1" {
                 print("Good, login")
-                let mvc = MapViewController()
+                let mvc = MapViewController(username: userGiven!, password: passGiven!)
                 self.present(mvc, animated: true, completion: nil)
             }
             else {

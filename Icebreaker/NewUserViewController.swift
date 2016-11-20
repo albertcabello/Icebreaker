@@ -98,7 +98,7 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     
     //Takes the user from this view controller to the map view controller
     func toMap(sender: UIButton!) {
-        self.present(MapViewController(), animated: true, completion: nil)
+        self.present(MapViewController(username: usrField.text!, password: passwordField.text!), animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

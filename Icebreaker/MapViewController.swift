@@ -8,11 +8,25 @@
 import UIKit
 import CoreLocation
 import MapKit
+import Alamofire
+import SwiftyJSON
 
 
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
+    private let username:String
+    private let password:String
+    
+    init(username:String, password:String) {
+        self.username = username
+        self.password = password
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
     
     
     override func viewDidLoad() {
@@ -60,6 +74,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
             let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
             let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
+            let mapSpan = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(1.0/60.0), longitudeDelta: CLLocationDegrees(1.0/60.0))
+            let mapRegion = MKCoordinateRegion(center: coordinates!, span: mapSpan)
+            mapView.region = mapRegion
             
             //Initialize the latitude and longitude labels
             let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
@@ -75,6 +92,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
             
         }
+        
     }
     
     //Sets the map to start tracking the user with heading enabled
