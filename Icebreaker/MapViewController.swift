@@ -51,6 +51,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         //Set the view to be the map
         view = mapView
         
+        //Get initial nearby users
+        showNearbyUsers()
+        
         
         
     }
@@ -118,6 +121,33 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    /*
+     * This function will get all nearby users based on the given username and password
+     * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
+     */
+    func showNearbyUsers() {
+        //The URL we will use the get request on to get nearby users
+        let url = "http://localhost:8000/?action=get&userGiven=\(self.username)&passGiven=\(self.password)"
+        
+        //Use Alamofire to perform the request
+        Alamofire.request(url).responseJSON { response in
+            let json = JSON(response.result.value!)
+            //Loop through API JSON response
+            for (index, subJson):(String, JSON) in json {
+                //Get longitude and latitude and create the annotation
+                let latitude = Double(subJson["latitude"].stringValue)!
+                let longitude = Double(subJson["longitude"].stringValue)!
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                annotation.title = subJson["username"].stringValue
+                //Display annotation on map
+                self.mapView.addAnnotation(annotation)
+            }
+            
+        }
+        
+        
     }
     
 } //Class ends
