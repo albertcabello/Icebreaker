@@ -70,6 +70,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         newUserButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         
+        
         //Add everything to the view
         self.view.addSubview(label)
         self.view.addSubview(usrField)

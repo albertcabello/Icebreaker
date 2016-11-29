@@ -77,9 +77,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
             let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
             let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
+            //Span of the mapView
             let mapSpan = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(1.0/60.0), longitudeDelta: CLLocationDegrees(1.0/60.0))
+            //Region of the mapView
             let mapRegion = MKCoordinateRegion(center: coordinates!, span: mapSpan)
+            //Apply region to the mapView
             mapView.region = mapRegion
+            
+            //Update the MySQL coordinates with actual coordinates
+            updateServer(coordinates: coordinates!)
             
             //Initialize the latitude and longitude labels
             let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
@@ -147,7 +153,33 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             
         }
         
-        
+    
+    }
+    
+    func updateServer(coordinates: CLLocationCoordinate2D) {
+        let latitude = coordinates.latitude
+        print(latitude)
+        let longitude = coordinates.longitude
+        print(longitude)
+        //The URL we will send the coordinates to so the MySQL server can be updated
+        let url = "http://localhost:8000/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude)&longitude=\(longitude)"
+        //Use Alamofire to connect to the URL
+        Alamofire.request(url).responseString { response in
+            print(response.result.value)
+            if response.result.value == "1" {
+                NSLog("Successful coordinate update")
+            }
+            else {
+                NSLog("Unsuccessful coordinate update, returning to login screen")
+                let alert = UIAlertController(title: "Could not update location", message: "Something went wrong with updating your location to the server, please try again later", preferredStyle: .alert)
+                let lvc = LoginViewController()
+                lvc.view.backgroundColor = UIColor.white
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { Void in
+                    self.present(lvc, animated: true, completion: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
 } //Class ends
