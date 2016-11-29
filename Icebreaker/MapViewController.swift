@@ -77,15 +77,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
             let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
             let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
-            //Span of the mapView
-            let mapSpan = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(1.0/60.0), longitudeDelta: CLLocationDegrees(1.0/60.0))
-            //Region of the mapView
-            let mapRegion = MKCoordinateRegion(center: coordinates!, span: mapSpan)
-            //Apply region to the mapView
-            mapView.region = mapRegion
+            
             
             //Update the MySQL coordinates with actual coordinates
-            updateServer(coordinates: coordinates!)
+            updateServer()
             
             //Initialize the latitude and longitude labels
             let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
@@ -100,6 +95,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             //Adds the longitude and latitude labels to the view
             self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
             
+            //Update the mySQL database after significant changes
+            var timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { (Timer) in
+                self.updateServer()})
+            
         }
         
     }
@@ -107,6 +106,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     //Sets the map to start tracking the user with heading enabled
     func loadMap() {
         mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
+        //Span of the mapView
+        let mapSpan = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(1.0/60.0), longitudeDelta: CLLocationDegrees(1.0/60.0))
+        //Region of the mapView
+        let mapRegion = MKCoordinateRegion(center: (locationManager.location?.coordinate)!, span: mapSpan)
+        //Apply region to the mapView
+        mapView.region = mapRegion
     }
     
     /**
@@ -140,7 +145,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         Alamofire.request(url).responseJSON { response in
             let json = JSON(response.result.value!)
             //Loop through API JSON response
-            for (index, subJson):(String, JSON) in json {
+            for (_, subJson):(String, JSON) in json {
                 //Get longitude and latitude and create the annotation
                 let latitude = Double(subJson["latitude"].stringValue)!
                 let longitude = Double(subJson["longitude"].stringValue)!
@@ -155,17 +160,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
     
     }
-    
-    func updateServer(coordinates: CLLocationCoordinate2D) {
-        let latitude = coordinates.latitude
-        print(latitude)
-        let longitude = coordinates.longitude
-        print(longitude)
+    /*
+     * Updates the user coordinates on the mySQL server
+     */
+    func updateServer() {
+        let coordinates = locationManager.location?.coordinate
+        let latitude = coordinates?.latitude
+        let longitude = coordinates?.longitude
         //The URL we will send the coordinates to so the MySQL server can be updated
-        let url = "http://localhost:8000/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude)&longitude=\(longitude)"
+        let url = "http://localhost:8000/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude!)&longitude=\(longitude!)"
         //Use Alamofire to connect to the URL
         Alamofire.request(url).responseString { response in
-            print(response.result.value)
+            //I wrote the webservice, it's definitely going to give an answer
             if response.result.value == "1" {
                 NSLog("Successful coordinate update")
             }
