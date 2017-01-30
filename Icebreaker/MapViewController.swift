@@ -62,6 +62,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         //Checks for whether location services is enabled
         if CLLocationManager.authorizationStatus() == .denied {
             //Create the UIAction that opens settings
+            
+            
+            //So going back after around two months of doing this, I have no idea why that handler works.  What does the compiler
+            //think (action) is?  Oh well, I'll figure it out later 
             let settings = UIAlertAction(title: "Settings", style: .default) { (action) in
                 if let appSetting = URL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.shared.open(appSetting)
@@ -97,7 +101,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             
             //Update the mySQL database after significant changes
             var timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { (Timer) in
-                self.updateServer()})
+                self.updateServer()
+                self.showNearbyUsers()})
+            
             
         }
         
@@ -145,6 +151,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         Alamofire.request(url).responseJSON { response in
             let json = JSON(response.result.value!)
             //Loop through API JSON response
+            var i = 0;
             for (_, subJson):(String, JSON) in json {
                 //Get longitude and latitude and create the annotation
                 let latitude = Double(subJson["latitude"].stringValue)!
@@ -154,9 +161,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 annotation.title = subJson["username"].stringValue
                 //Display annotation on map
                 self.mapView.addAnnotation(annotation)
+                //Limit amount of annotations to 10 to prevent CPU overload
+                i += 1
+                if (i == 10) {
+                    break
+                }
             }
             
         }
+        NSLog("Successful nearby user update")
         
     
     }

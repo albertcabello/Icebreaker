@@ -83,6 +83,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //Action for when the login button is clicked
     func login(sender: UIButton!) {
+        
         //Verify that the username and password fields are not blank
         guard usrField.hasText && passwordField.hasText else { //Check that both username and password are entered
             
