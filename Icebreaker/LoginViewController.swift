@@ -23,17 +23,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         //Set what the view does when it loads
         super.viewDidLoad()
+        
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let label = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 40))
-        label.text = "Login View Controller"
+        //let label = UILabel(frame: CGRect(x: 20, y: 20, width: 300, height: 40))
+        //label.text = "Login View Controller"
         
         
-        let placeholderLogo = UILabel(frame: CGRect(x: 20, y: 90, width: 125, height: 40))
-        placeholderLogo.center.x = self.view.center.x
-        print("placeholderLogo created")
-        placeholderLogo.text = "Logo goes here"
+//        let placeholderLogo = UILabel(frame: CGRect(x: 20, y: 90, width: 125, height: 40))
+//        placeholderLogo.center.x = self.view.center.x
+//        print("placeholderLogo created")
+//        placeholderLogo.text = "Logo goes here"
+        
+        let logo = UIImage(named: "Logo.png")
+        let logoView = UIImageView(image: logo)
+        logoView.frame = CGRect(x: 20, y: 90, width: 125, height: 200)
+        logoView.contentMode = .scaleAspectFit
+        logoView.image = logo
+        logoView.center.x = self.view.center.x
+        
+        
+        
+        
+        
         
         
         //Username and password text field intializers
@@ -42,6 +57,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usrField.borderStyle = .roundedRect
         usrField.placeholder = "Username"
         usrField.returnKeyType = .next
+        usrField.layer.borderWidth = 1
+        usrField.layer.cornerRadius = 5
+        //usrField.backgroundColor = UIColor.gray
         
         
         passwordField.borderStyle = .roundedRect
@@ -49,35 +67,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.isSecureTextEntry = true
         passwordField.delegate = self
         passwordField.returnKeyType = .go
+        passwordField.layer.borderWidth = 1
+        passwordField.layer.cornerRadius = 5
+        //passwordField.backgroundColor = UIColor.gray
         
         
         //Initialize the login button to the view
         //Sets the title, color, rounded corners, and the action when pressed
         loginButton.setTitle("Login!", for: .normal)
         loginButton.addTarget(self, action: #selector(LoginViewController.login), for: .touchUpInside)
-        loginButton.backgroundColor = UIColor.green
+        loginButton.backgroundColor = UIColor.white
+        loginButton.setTitleColor(UIColor.black, for: .normal)
         loginButton.layer.cornerRadius = 5
-        loginButton.layer.borderWidth = 5
-        loginButton.layer.borderColor = UIColor.green.cgColor
+        loginButton.layer.borderWidth = 1
+        //loginButton.layer.borderColor = UIColor.black.cgColor
         
         
         //Add a create new user button to the view
         let newUserButton = UIButton(frame: CGRect(x: self.view.frame.width/2 - (125/2), y: self.view.frame.height/2 + 90, width: 125, height: 30))
         newUserButton.setTitle("Create an account", for: .normal)
+        newUserButton.setTitleColor(UIColor.black, for: .normal)
         newUserButton.addTarget(self, action: #selector(LoginViewController.newUser), for: .touchUpInside)
-        newUserButton.setTitleColor(UIColor.blue, for: .normal)
+        newUserButton.setTitleColor(UIColor.black, for: .normal)
         newUserButton.titleLabel?.numberOfLines = 1
         newUserButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         
         
         //Add everything to the view
-        self.view.addSubview(label)
+        //self.view.addSubview(label)
         self.view.addSubview(usrField)
         self.view.addSubview(passwordField)
-        self.view.addSubview(placeholderLogo)
+        //self.view.addSubview(placeholderLogo)
         self.view.addSubview(loginButton)
         self.view.addSubview(newUserButton)
+        self.view.addSubview(logoView)
     }
     
     
