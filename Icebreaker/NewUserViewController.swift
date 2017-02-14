@@ -23,14 +23,23 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         print("Create new user screen loaded")
         
+        let logo = UIImage(named: "Logo.png")
+        let logoView = UIImageView(image: logo)
+        logoView.frame = CGRect(x: 20, y: 90, width: 125, height: 200)
+        logoView.contentMode = .scaleAspectFit
+        logoView.image = logo
+        logoView.center.x = self.view.center.x
+        
+        self.view.addSubview(logoView)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         //Creates label that identifies this view from others.  Will be removed in the final version
-        let identifierLabel = UILabel(frame: CGRect(x: 20, y: 40, width: 300, height: 40))
-        identifierLabel.text = "New User View Controller"
-        self.view.addSubview(identifierLabel)
+//        let identifierLabel = UILabel(frame: CGRect(x: 20, y: 40, width: 300, height: 40))
+//        identifierLabel.text = "New User View Controller"
+//        self.view.addSubview(identifierLabel)
         
         
         //Create the text field for email, username, desired password, confirm password, and phone number
