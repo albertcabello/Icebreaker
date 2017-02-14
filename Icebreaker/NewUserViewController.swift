@@ -49,17 +49,26 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         emailField.placeholder = "you@yourdomain.com"
         emailField.keyboardType = .emailAddress
         emailField.delegate = self
+        emailField.layer.borderColor = UIColor.black.cgColor
+        emailField.layer.borderWidth = 1
+        emailField.layer.cornerRadius = 5
         
         //Username input field
         usrField.borderStyle = .roundedRect
         usrField.placeholder = "Username"
         usrField.delegate = self
+        usrField.layer.borderColor = UIColor.black.cgColor
+        usrField.layer.borderWidth = 1
+        usrField.layer.cornerRadius = 5
         
         //Password input field
         passwordField.borderStyle = .roundedRect
         passwordField.placeholder = "Password"
         passwordField.isSecureTextEntry = true
         passwordField.delegate = self
+        passwordField.layer.borderColor = UIColor.black.cgColor
+        passwordField.layer.borderWidth = 1
+        passwordField.layer.cornerRadius = 5
         
         //Password confirmation field
         confirmField.borderStyle = .roundedRect
@@ -67,6 +76,9 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         confirmField.isSecureTextEntry = true
         confirmField.delegate = self
         confirmField.returnKeyType = .go
+        confirmField.layer.borderColor = UIColor.black.cgColor
+        confirmField.layer.borderWidth = 1
+        confirmField.layer.cornerRadius = 5
         
         //        //Phone input field
         //        phoneField.placeholder = "(###)###+###"
@@ -84,11 +96,13 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         //self.view.addSubview(phoneField)
         
         //Create button that accepts the new user information and sends them to the map view
-        createButton.backgroundColor = UIColor.green
+        //createButton.backgroundColor = UIColor.green
+        createButton.setTitleColor(UIColor.black, for: .normal)
         createButton.setTitle("Let's see who's near us!", for: .normal)
         createButton.addTarget(self, action: #selector(NewUserViewController.toMap), for: .touchUpInside)
         createButton.layer.cornerRadius = 5
-        createButton.layer.borderColor = UIColor.black.cgColor
+        createButton.layer.borderWidth = 1
+        //createButton.layer.borderColor = UIColor.black.cgColor
         createButton.titleLabel?.numberOfLines = 1
         createButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
