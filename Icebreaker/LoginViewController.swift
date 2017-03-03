@@ -151,7 +151,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let passGiven = passwordField.text
         
         //URL that will receive the username and password and check it against the database
-        let url = "http://localhost:8000/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
+        let url = "http://albertocabello.com/Icebreaker-API/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
         
         
         //Use Alamofire for http get request and check if username and password are correct

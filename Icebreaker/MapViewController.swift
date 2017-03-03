@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
     private let username:String
@@ -31,6 +31,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         
         //Set up the map and its type
@@ -53,6 +54,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         //Get initial nearby users
         showNearbyUsers()
+        
+        
         
         
         
@@ -97,7 +100,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             print("longLabel set")
             
             //Adds the longitude and latitude labels to the view
-            self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
+            //self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
             
             //Update the mySQL database after significant changes
             var _ = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { (Timer) in
@@ -145,7 +148,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
      */
     func showNearbyUsers() {
         //The URL we will use the get request on to get nearby users
-        let url = "http://localhost:8000/?action=get&userGiven=\(self.username)&passGiven=\(self.password)"
+        let url = "http://albertocabello.com/Icebreaker-API/?action=get&userGiven=\(self.username)&passGiven=\(self.password)"
         
         //Use Alamofire to perform the request
         Alamofire.request(url).responseJSON { response in
@@ -158,8 +161,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 annotation.title = subJson["username"].stringValue
-                //Display annotation on map
+                self.mapView.removeAnnotations(self.mapView.annotations)
                 self.mapView.addAnnotation(annotation)
+                
+                //let imageAnnotation = MKPinAnnotationView()
+                //imageAnnotation.annotation = annotation
+                
+                //Display annotation on map
+                
+                
+                //self.mapView.addAnnotation(imageAnnotation)
                 
             }
             
@@ -168,6 +179,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
     
     }
+    
+    
+    
     /*
      * Updates the user coordinates on the mySQL server
      */
@@ -176,7 +190,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         let latitude = coordinates?.latitude
         let longitude = coordinates?.longitude
         //The URL we will send the coordinates to so the MySQL server can be updated
-        let url = "http://localhost:8000/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude!)&longitude=\(longitude!)"
+        let url = "http://albertocabello.com/Icebreaker-API/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude!)&longitude=\(longitude!)"
         //Use Alamofire to connect to the URL
         Alamofire.request(url).responseString { response in
             //I wrote the webservice, it's definitely going to give an answer
