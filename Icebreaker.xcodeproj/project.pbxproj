@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6D5B750B5D9A0C782B6253AC /* Pods_Icebreaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */; };
-		DA29F37D1E73342C00303BD9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29F37C1E73342C00303BD9 /* User.swift */; };
 		DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4F99941DDB817E000DDC68 /* AppDelegate.swift */; };
 		DA4F999A1DDB817E000DDC68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F99981DDB817E000DDC68 /* Main.storyboard */; };
 		DA4F999C1DDB817E000DDC68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999B1DDB817E000DDC68 /* Assets.xcassets */; };
@@ -19,13 +18,13 @@
 		DAB355D41DDB82BE00909B6F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DAB355D31DDB82BE00909B6F /* Podfile */; };
 		DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D51DDB82F000909B6F /* NewUserViewController.swift */; };
 		DAC683EB1E510B5200655923 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DAC683EA1E510B5200655923 /* Logo.png */; };
+		DAFCA3F61E789F9F001AAB96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCA3F51E789F9F001AAB96 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1348EEC1A33528F9E967D85F /* Pods-Icebreaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.release.xcconfig"; sourceTree = "<group>"; };
 		67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Icebreaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5CF40E59501EDF1496BB043 /* Pods-Icebreaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.debug.xcconfig"; sourceTree = "<group>"; };
-		DA29F37C1E73342C00303BD9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DA4F99911DDB817E000DDC68 /* Icebreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Icebreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4F99941DDB817E000DDC68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4F99991DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		DAB355D31DDB82BE00909B6F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DAB355D51DDB82F000909B6F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		DAC683EA1E510B5200655923 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		DAFCA3F51E789F9F001AAB96 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Icebreaker/User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 		DA29F37B1E7333D200303BD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DA29F37C1E73342C00303BD9 /* User.swift */,
+				DAFCA3F51E789F9F001AAB96 /* User.swift */,
 			);
 			name = Models;
 			path = ..;
@@ -259,7 +259,7 @@
 			files = (
 				DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */,
 				DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */,
-				DA29F37D1E73342C00303BD9 /* User.swift in Sources */,
+				DAFCA3F61E789F9F001AAB96 /* User.swift in Sources */,
 				DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */,
 				DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */,
 				DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */,
