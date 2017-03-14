@@ -10,6 +10,7 @@ import Alamofire
 
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
+    var networkController:NetworkController!
     
     //Initialize all the fields so that they can be referenced by all functions
     let usrField = UITextField(frame: CGRect(x: UIScreen.main.bounds.size.width/2 - 300.0/2, y: UIScreen.main.bounds.size.height/2 - 30, width: 300.0, height: 30))
@@ -22,6 +23,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         //Set what the view does when it loads
+        self.view.backgroundColor = UIColor.white
         super.viewDidLoad()
         
         
@@ -151,6 +153,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let passGiven = passwordField.text
         
         //URL that will receive the username and password and check it against the database
+        /*
         let url = "http://albertocabello.com/Icebreaker-API/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
         
         
@@ -169,7 +172,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
             
+        } */
+        
+        //Attempt to use the NetworkController login and see if it works
+        networkController.setUsername(user: userGiven!)
+        networkController.setPassword(pass: passGiven!)
+        networkController.login() { success in
+            if success {
+                let mvc = MapViewController(username: userGiven!, password: passGiven!)
+                mvc.networkController = self.networkController
+                self.present(mvc, animated: true, completion: nil)
+            }
+            else {
+                let alert = UIAlertController(title: "Uh-oh!", message: "The username or password is wrong!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
+        
 
     }
     
@@ -177,6 +197,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //Acion for when the create new user button is clicked
     func newUser(sender: UIButton!) {
         let nuvc:NewUserViewController = NewUserViewController()
+        nuvc.networkController = self.networkController
         nuvc.view.backgroundColor = UIColor.white
         self.present(nuvc, animated: true, completion: nil)
     }

@@ -12,10 +12,20 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var networkController:NetworkController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //Passes a network controller to the login view controller
+        networkController = NetworkController()
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let initialVC = LoginViewController()
+        initialVC.networkController = self.networkController
+        self.window?.rootViewController = initialVC
+        self.window?.makeKeyAndVisible()
+        
+
         return true
     }
 

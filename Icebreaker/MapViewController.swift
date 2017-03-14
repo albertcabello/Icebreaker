@@ -13,6 +13,7 @@ import SwiftyJSON
 
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    var networkController:NetworkController!
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
     private let username:String
@@ -146,38 +147,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
      * This function will get all nearby users based on the given username and password
      * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
      */
+    
     func showNearbyUsers() {
-        //The URL we will use the get request on to get nearby users
-        let url = "http://albertocabello.com/Icebreaker-API/?action=get&userGiven=\(self.username)&passGiven=\(self.password)"
-        
-        //Use Alamofire to perform the request
-        Alamofire.request(url).responseJSON { response in
-            let json = JSON(response.result.value!)
-            //Loop through API JSON response
-            for (_, subJson):(String, JSON) in json {
-                //Get longitude and latitude and create the annotation
-                let latitude = Double(subJson["latitude"].stringValue)!
-                let longitude = Double(subJson["longitude"].stringValue)!
+        networkController.getNearbyUsers() { users in
+            for user in users {
                 let annotation = MKPointAnnotation()
-                annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                annotation.title = subJson["username"].stringValue
-                self.mapView.removeAnnotations(self.mapView.annotations)
+                let coords = user.getCoordinates()
+                annotation.coordinate = CLLocationCoordinate2D(latitude: coords.0 , longitude: coords.1)
+                annotation.title = user.getName()
                 self.mapView.addAnnotation(annotation)
                 
-                //let imageAnnotation = MKPinAnnotationView()
-                //imageAnnotation.annotation = annotation
-                
-                //Display annotation on map
-                
-                
-                //self.mapView.addAnnotation(imageAnnotation)
-                
             }
-            
         }
         NSLog("Successful nearby user update")
-        
-    
     }
     
     

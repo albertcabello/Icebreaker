@@ -8,6 +8,7 @@
 import UIKit
 
 class NewUserViewController: UIViewController, UITextFieldDelegate {
+    var networkController: NetworkController?
     
     //Initialize fields so that they can be used anywhere in the class
     let emailField = UITextField(frame: CGRect(x: UIScreen.main.bounds.size.width/2 - 150, y: UIScreen.main.bounds.size.height/2 - 100, width: 300.0, height: 40))
@@ -121,7 +122,9 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     
     //Takes the user from this view controller to the map view controller
     func toMap(sender: UIButton!) {
-        self.present(MapViewController(username: usrField.text!, password: passwordField.text!), animated: true, completion: nil)
+        let mvc = MapViewController(username: usrField.text!, password: passwordField.text!)
+        mvc.networkController = self.networkController
+        self.present(mvc, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

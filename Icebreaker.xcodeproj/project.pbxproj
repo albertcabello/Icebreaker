@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		6D5B750B5D9A0C782B6253AC /* Pods_Icebreaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */; };
+		DA29F37D1E73342C00303BD9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29F37C1E73342C00303BD9 /* User.swift */; };
 		DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4F99941DDB817E000DDC68 /* AppDelegate.swift */; };
 		DA4F999A1DDB817E000DDC68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F99981DDB817E000DDC68 /* Main.storyboard */; };
 		DA4F999C1DDB817E000DDC68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999B1DDB817E000DDC68 /* Assets.xcassets */; };
 		DA4F999F1DDB817E000DDC68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999D1DDB817E000DDC68 /* LaunchScreen.storyboard */; };
+		DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA399F81E72FFBA00D6E7F4 /* NetworkController.swift */; };
 		DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355CF1DDB825500909B6F /* LoginViewController.swift */; };
 		DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D11DDB827700909B6F /* MapViewController.swift */; };
 		DAB355D41DDB82BE00909B6F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DAB355D31DDB82BE00909B6F /* Podfile */; };
@@ -23,12 +25,14 @@
 		1348EEC1A33528F9E967D85F /* Pods-Icebreaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.release.xcconfig"; sourceTree = "<group>"; };
 		67C85293426C74E7C67DA001 /* Pods_Icebreaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Icebreaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5CF40E59501EDF1496BB043 /* Pods-Icebreaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icebreaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Icebreaker/Pods-Icebreaker.debug.xcconfig"; sourceTree = "<group>"; };
+		DA29F37C1E73342C00303BD9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DA4F99911DDB817E000DDC68 /* Icebreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Icebreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4F99941DDB817E000DDC68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4F99991DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA4F999B1DDB817E000DDC68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4F999E1DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4F99A01DDB817E000DDC68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAA399F81E72FFBA00D6E7F4 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		DAB355CF1DDB825500909B6F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DAB355D11DDB827700909B6F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DAB355D31DDB82BE00909B6F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -65,6 +69,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA29F37B1E7333D200303BD9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DA29F37C1E73342C00303BD9 /* User.swift */,
+			);
+			name = Models;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		DA4F99881DDB817D000DDC68 = {
 			isa = PBXGroup;
 			children = (
@@ -88,9 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				DA4F99941DDB817E000DDC68 /* AppDelegate.swift */,
-				DAB355D11DDB827700909B6F /* MapViewController.swift */,
-				DAB355CF1DDB825500909B6F /* LoginViewController.swift */,
-				DAB355D51DDB82F000909B6F /* NewUserViewController.swift */,
+				DAA399FB1E7300B600D6E7F4 /* Views */,
+				DAA399FA1E7300A200D6E7F4 /* Controllers */,
+				DA29F37B1E7333D200303BD9 /* Models */,
 				DA4F99981DDB817E000DDC68 /* Main.storyboard */,
 				DA4F999B1DDB817E000DDC68 /* Assets.xcassets */,
 				DAC683EA1E510B5200655923 /* Logo.png */,
@@ -98,6 +111,24 @@
 				DA4F99A01DDB817E000DDC68 /* Info.plist */,
 			);
 			path = Icebreaker;
+			sourceTree = "<group>";
+		};
+		DAA399FA1E7300A200D6E7F4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAA399F81E72FFBA00D6E7F4 /* NetworkController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DAA399FB1E7300B600D6E7F4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAB355D11DDB827700909B6F /* MapViewController.swift */,
+				DAB355CF1DDB825500909B6F /* LoginViewController.swift */,
+				DAB355D51DDB82F000909B6F /* NewUserViewController.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +259,8 @@
 			files = (
 				DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */,
 				DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */,
+				DA29F37D1E73342C00303BD9 /* User.swift in Sources */,
+				DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */,
 				DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */,
 				DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */,
 			);
