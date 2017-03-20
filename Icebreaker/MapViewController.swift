@@ -169,26 +169,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
      */
     func updateServer() {
         let coordinates = locationManager.location?.coordinate
-        let latitude = coordinates?.latitude
-        let longitude = coordinates?.longitude
-        //The URL we will send the coordinates to so the MySQL server can be updated
-        let url = "http://albertocabello.com/Icebreaker-API/?action=update&userGiven=\(self.username)&passGiven=\(self.password)&latitude=\(latitude!)&longitude=\(longitude!)"
-        //Use Alamofire to connect to the URL
-        Alamofire.request(url).responseString { response in
-            //I wrote the webservice, it's definitely going to give an answer
-            if response.result.value == "1" {
-                NSLog("Successful coordinate update")
-            }
-            else {
-                NSLog("Unsuccessful coordinate update, returning to login screen")
+        networkController.updateServer(latitude: (coordinates?.latitude)!, longitude: (coordinates?.longitude)!) { response in
+            if response != 1 {
                 let alert = UIAlertController(title: "Could not update location", message: "Something went wrong with updating your location to the server, please try again later", preferredStyle: .alert)
                 let lvc = LoginViewController()
                 lvc.view.backgroundColor = UIColor.white
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { Void in
+                let okAction = UIAlertAction(title: "OK", style: .default) { Void in
                     self.present(lvc, animated: true, completion: nil)
-                }))
+                }
+                alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
             }
+            
         }
     }
     

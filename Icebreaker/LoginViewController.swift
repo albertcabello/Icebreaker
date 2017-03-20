@@ -152,29 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //Password user provided
         let passGiven = passwordField.text
         
-        //URL that will receive the username and password and check it against the database
-        /*
-        let url = "http://albertocabello.com/Icebreaker-API/?action=login&userGiven=\(userGiven!)&passGiven=\(passGiven!)"
         
-        
-        //Use Alamofire for http get request and check if username and password are correct
-        Alamofire.request(url).responseString { response in
-            print(response)
-            if response.result.value == "1" {
-                print("Good, login")
-                let mvc = MapViewController(username: userGiven!, password: passGiven!)
-                self.present(mvc, animated: true, completion: nil)
-            }
-            else {
-                print("Bad, no login")
-                let alert = UIAlertController(title: "Uh-oh!", message: "The username or password is wrong!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-            
-        } */
-        
-        //Attempt to use the NetworkController login and see if it works
         networkController.setUsername(user: userGiven!)
         networkController.setPassword(pass: passGiven!)
         networkController.login() { success in

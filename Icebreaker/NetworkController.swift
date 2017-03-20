@@ -62,7 +62,7 @@ class NetworkController {
     }
     
     
-    func getNearbyUsers(completion: @escaping (_ users2: [User]) -> ()) {
+    func getNearbyUsers(completion: @escaping (_ users: [User]) -> ()) {
         var users = [User]()
         action = "get"
         let url = "http://albertocabello.com/Icebreaker-API/?action=\(action)&userGiven=\(userGiven)&passGiven=\(passGiven)"
@@ -80,6 +80,22 @@ class NetworkController {
             }
             completion(users)
         }
+    }
+    
+    func updateServer(latitude: Double, longitude:Double, completion: @escaping (_ response:Int)->()) {
+        let url = "http://albertocabello.com/Icebreaker-API/?action=update&userGiven=\(self.userGiven)&passGiven=\(self.passGiven)&latitude=\(latitude)&longitude=\(longitude)"
+        Alamofire.request(url).responseString { response in
+            if response.result.value == "1" {
+                NSLog("Successful coordinate update")
+                completion(1)
+            }
+            else {
+                NSLog("Coordinate update failed")
+                completion(0)
+            }
+        }
+        
+
     }
     
     func setUsername(user:String) {

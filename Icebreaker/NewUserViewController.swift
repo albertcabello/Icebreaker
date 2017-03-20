@@ -8,7 +8,7 @@
 import UIKit
 
 class NewUserViewController: UIViewController, UITextFieldDelegate {
-    var networkController: NetworkController?
+    var networkController: NetworkController!
     
     //Initialize fields so that they can be used anywhere in the class
     let emailField = UITextField(frame: CGRect(x: UIScreen.main.bounds.size.width/2 - 150, y: UIScreen.main.bounds.size.height/2 - 100, width: 300.0, height: 40))
@@ -122,9 +122,42 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     
     //Takes the user from this view controller to the map view controller
     func toMap(sender: UIButton!) {
-        let mvc = MapViewController(username: usrField.text!, password: passwordField.text!)
-        mvc.networkController = self.networkController
-        self.present(mvc, animated: true, completion: nil)
+        guard usrField.hasText && passwordField.hasText && confirmField.hasText && passwordField.text == confirmField.text else {
+            if passwordField.text != confirmField.text {
+                let alert = UIAlertController(title: "Passwords do not match", message: "Make sure both passwords are the same", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            if !usrField.hasText || !passwordField.hasText || !confirmField.hasText {
+                let alert = UIAlertController(title: "Please fill in all the fields", message: "A field is empty, make sure all fields are filled in", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+            }
+            return
+        }
+        networkController?.userGiven = usrField.text!
+        networkController?.passGiven = passwordField.text!
+        networkController?.register { response in
+            switch response {
+                case "User added":
+                    let mvc = MapViewController(username: self.usrField.text!, password: self.passwordField.text!)
+                    mvc.networkController = self.networkController
+                    self.present(mvc, animated: true, completion: nil)
+                case "Username exists":
+                    let alert = UIAlertController(title: "Username exists", message: "I'm sorry, that username is taken", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                case "Registration failed":
+                    let alert = UIAlertController(title: "There was an error", message: "Check your network or try again later, sorry!", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                default:
+                    break
+                
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
