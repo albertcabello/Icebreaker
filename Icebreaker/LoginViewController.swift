@@ -157,7 +157,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         networkController.setPassword(pass: passGiven!)
         networkController.login() { success in
             if success {
-                let mvc = MapViewController(username: userGiven!, password: passGiven!)
+                let mvc = MapViewController()
                 mvc.networkController = self.networkController
                 self.present(mvc, animated: true, completion: nil)
             }

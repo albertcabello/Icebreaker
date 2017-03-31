@@ -141,7 +141,7 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         networkController?.register { response in
             switch response {
                 case "User added":
-                    let mvc = MapViewController(username: self.usrField.text!, password: self.passwordField.text!)
+                    let mvc = MapViewController()
                     mvc.networkController = self.networkController
                     self.present(mvc, animated: true, completion: nil)
                 case "Username exists":

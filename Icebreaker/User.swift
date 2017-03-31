@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User {
+class User: Equatable {
     private var name:String
     private var desc:String
     private var lat:Double
@@ -39,6 +39,10 @@ class User {
     
     func getCoordinates() -> (Double, Double) {
         return (lat, long)
+    }
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        return ((lhs.getName() == rhs.getName()) && (lhs.getCoordinates() == rhs.getCoordinates()))
     }
     
 }

@@ -16,19 +16,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var networkController:NetworkController!
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
-    private let username:String
-    private let password:String
-    
-    init(username:String, password:String) {
-        self.username = username
-        self.password = password
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +24,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         //Set up the map and its type
         mapView.mapType = .standard
-        
+        mapView.delegate = self
         //Request location services access
         locationManager.requestAlwaysAuthorization()
         
@@ -55,10 +42,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         //Get initial nearby users
         showNearbyUsers()
-        
-        
-        
-        
+
         
     }
     
@@ -113,6 +97,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
+    
+    
     //Sets the map to start tracking the user with heading enabled
     func loadMap() {
         mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
@@ -156,13 +142,36 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 annotation.coordinate = CLLocationCoordinate2D(latitude: coords.0 , longitude: coords.1)
                 annotation.title = user.getName()
                 self.mapView.addAnnotation(annotation)
-                
             }
         }
         NSLog("Successful nearby user update")
     }
     
-    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        print("delegate called")
+        if (annotation is MKUserLocation) {
+            return nil
+        }
+        let reuseId = annotation.title!!
+        var anview = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        anview?.canShowCallout = true
+        if (anview == nil) {
+//            print("anview = nil")
+            anview = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            anview?.canShowCallout = true
+//            print(anview?.annotation?.title!)
+            let img = UIImage(named: "Logo.png")
+            let imgView = UIImageView(image: img)
+            imgView.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+            anview?.leftCalloutAccessoryView = imgView
+        }
+        else {
+//            print("anview not nil")
+            anview?.annotation = annotation
+        }
+//        print("Returning view")
+        return anview
+    }
     
     /*
      * Updates the user coordinates on the mySQL server

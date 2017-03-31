@@ -16,6 +16,7 @@ class NetworkController {
     var userGiven:String
     var email:String
     var action:String
+    var users = [User]()
     
     init() {
         passGiven = ""
@@ -63,11 +64,10 @@ class NetworkController {
     
     
     func getNearbyUsers(completion: @escaping (_ users: [User]) -> ()) {
-        var users = [User]()
         action = "get"
         let url = "http://albertocabello.com/Icebreaker-API/?action=\(action)&userGiven=\(userGiven)&passGiven=\(passGiven)"
         Alamofire.request(url).responseJSON() { response in
-            let json = JSON(response.result.value!)
+            let json = JSON(response.result.value)
             //Loop through API JSON response
             for (_, subJson):(String, JSON) in json {
                 //Get longitude and latitude and create the annotation
@@ -75,10 +75,9 @@ class NetworkController {
                 let longitude = Double(subJson["longitude"].stringValue)!
                 let name = subJson["username"].stringValue
                 let user = User(name: name, desc: "" , lat: latitude, long: longitude)
-                users.append(user)
-    
+                self.users.append(user)
             }
-            completion(users)
+            completion(self.users)
         }
     }
     
