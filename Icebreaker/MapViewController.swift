@@ -75,6 +75,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             updateServer()
             
             //Initialize the latitude and longitude labels
+            
             let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
             latLabel.text = "Latitude: " + (latitude?.description)!   //Turn latitude into a string
             latLabel.backgroundColor = UIColor.white
@@ -97,7 +98,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
-    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        mapView.setCenter(locations[locations.endIndex - 1].coordinate, animated: true)
+    }
     
     //Sets the map to start tracking the user with heading enabled
     func loadMap() {
@@ -134,14 +137,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
      * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
      */
     
+    
     func showNearbyUsers() {
+        let shownAnnotation = mapView.annotations
         networkController.getNearbyUsers() { users in
             for user in users {
-                let annotation = MKPointAnnotation()
+                var annotation = MKPointAnnotation()
                 let coords = user.getCoordinates()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: coords.0 , longitude: coords.1)
                 annotation.title = user.getName()
-                self.mapView.addAnnotation(annotation)
+                //Supposed to check if the annotation already exists
+                if (!shownAnnotation.contains() { (check) -> Bool in
+                    if (check.title! == annotation.title) {
+                        NSLog("Match exists, old coords: \(annotation.coordinate)" )
+                        annotation = check as! MKPointAnnotation
+                        NSLog("New coords: \(annotation.coordinate)")
+                        return true
+                    }
+                    return false
+                }) {
+                    self.mapView.addAnnotation(annotation)
+                }//End of check
+                
             }
         }
         NSLog("Successful nearby user update")
@@ -166,7 +183,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             anview?.leftCalloutAccessoryView = imgView
         }
         else {
-//            print("anview not nil")
+//          print("anview not nil")
             anview?.annotation = annotation
         }
 //        print("Returning view")

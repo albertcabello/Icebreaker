@@ -67,7 +67,7 @@ class NetworkController {
         action = "get"
         let url = "http://albertocabello.com/Icebreaker-API/?action=\(action)&userGiven=\(userGiven)&passGiven=\(passGiven)"
         Alamofire.request(url).responseJSON() { response in
-            let json = JSON(response.result.value)
+            let json = JSON(response.result.value!)
             //Loop through API JSON response
             for (_, subJson):(String, JSON) in json {
                 //Get longitude and latitude and create the annotation
