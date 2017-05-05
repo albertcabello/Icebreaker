@@ -113,7 +113,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         mapView.region = mapRegion
     }
     
-    /**
+    /*
      * -Parameters:
      *   - title: The desired title for the alert
      *   - message: The desired message for the alert
@@ -132,12 +132,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     /*
      * This function will get all nearby users based on the given username and password
      * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
      */
-    
-    
     func showNearbyUsers() {
         let shownAnnotation = mapView.annotations
         networkController.getNearbyUsers() { users in
@@ -162,6 +161,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             }
         }
         NSLog("Successful nearby user update")
+    }
+    
+    //The function to be called when the callout bubble on an annotation is pressed
+    func calloutTapped() {
+        //Eventually this will go to the interests screen of the selected user
+        print("Callout tapped")
+    }
+    
+    //Add a gesture recognizer to each callout so that I can tell when it's pressed
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        //Initialize the gesture recognizer
+        let tap = UITapGestureRecognizer(target: self, action: #selector(calloutTapped))
+        view.addGestureRecognizer(tap)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
