@@ -16,7 +16,7 @@ class NetworkController {
     var userGiven:String
     var email:String
     var action:String
-    var users = [User]()
+    var users = Set<User>() //The set of users coming from the server, not guaranteed to be the same as what is shown on the map currently
     
     init() {
         passGiven = ""
@@ -63,7 +63,7 @@ class NetworkController {
     }
     
     
-    func getNearbyUsers(completion: @escaping (_ users: [User]) -> ()) {
+    func getNearbyUsers(completion: @escaping (_ users: Set<User>) -> ()) {
         action = "get"
         let url = "http://albertocabello.com/Icebreaker-API/?action=\(action)&userGiven=\(userGiven)&passGiven=\(passGiven)"
         Alamofire.request(url).responseJSON() { response in
@@ -75,7 +75,7 @@ class NetworkController {
                 let longitude = Double(subJson["longitude"].stringValue)!
                 let name = subJson["username"].stringValue
                 let user = User(name: name, desc: "" , lat: latitude, long: longitude)
-                self.users.append(user)
+                self.users.insert(user)
             }
             completion(self.users)
         }

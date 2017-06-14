@@ -50,10 +50,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //Checks for whether location services is enabled
         if CLLocationManager.authorizationStatus() == .denied {
             //Create the UIAction that opens settings
-            
-            
-            //So going back after around two months of doing this, I have no idea why that handler works.  What does the compiler
-            //think (action) is?  Oh well, I'll figure it out later 
+        
             let settings = UIAlertAction(title: "Settings", style: .default) { (action) in
                 if let appSetting = URL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.shared.open(appSetting)
@@ -76,14 +73,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             //Initialize the latitude and longitude labels
             
-            let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
-            latLabel.text = "Latitude: " + (latitude?.description)!   //Turn latitude into a string
-            latLabel.backgroundColor = UIColor.white
-            print("latLabel set")
-            let longLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 90.0, width: self.view.frame.width - 40.0, height: 30.0))
-            longLabel.text = "Longitude: " + (longitude?.description)! //Turn latitude into a string
-            longLabel.backgroundColor = UIColor.white
-            print("longLabel set")
+//            let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
+//            latLabel.text = "Latitude: " + (latitude?.description)!   //Turn latitude into a string
+//            latLabel.backgroundColor = UIColor.white
+//            print("latLabel set")
+//            let longLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 90.0, width: self.view.frame.width - 40.0, height: 30.0))
+//            longLabel.text = "Longitude: " + (longitude?.description)! //Turn latitude into a string
+//            longLabel.backgroundColor = UIColor.white
+//            print("longLabel set")
             
             //Adds the longitude and latitude labels to the view
             //self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
@@ -92,8 +89,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             var _ = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { (Timer) in
                 self.updateServer()
                 self.showNearbyUsers()})
-            
-            
         }
         
     }
@@ -148,9 +143,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 //Supposed to check if the annotation already exists
                 if (!shownAnnotation.contains() { (check) -> Bool in
                     if (check.title! == annotation.title) {
-                        NSLog("Match exists, old coords: \(annotation.coordinate)" )
-                        annotation = check as! MKPointAnnotation
-                        NSLog("New coords: \(annotation.coordinate)")
+                        
                         return true
                     }
                     return false

@@ -8,11 +8,15 @@
 
 import Foundation
 
-class User: Equatable {
+class User: Equatable, Hashable {
     private var name:String
     private var desc:String
     private var lat:Double
     private var long:Double
+    
+    var hashValue: Int {
+        return name.hashValue
+    }
     
     init(name:String, desc:String = "", lat:Double, long:Double) {
         self.name = name
