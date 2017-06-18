@@ -25,6 +25,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //Set up the map and its type
         mapView.mapType = .standard
         mapView.delegate = self
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isRotateEnabled = false
         //Request location services access
         locationManager.requestAlwaysAuthorization()
         
@@ -62,10 +65,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
         }
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            let userLocation = locationManager.location     //The users location as a CLLocation Object
-            let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
-            let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
-            let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
+//            let userLocation = locationManager.location     //The users location as a CLLocation Object
+//            let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
+//            let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
+//            let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
             
             
             //Update the MySQL coordinates with actual coordinates
@@ -93,9 +96,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        mapView.setCenter(locations[locations.endIndex - 1].coordinate, animated: true)
-    }
+    
     
     //Sets the map to start tracking the user with heading enabled
     func loadMap() {
@@ -133,27 +134,47 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
      * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
      */
     func showNearbyUsers() {
-        let shownAnnotation = mapView.annotations
         networkController.getNearbyUsers() { users in
-            for user in users {
-                var annotation = MKPointAnnotation()
-                let coords = user.getCoordinates()
-                annotation.coordinate = CLLocationCoordinate2D(latitude: coords.0 , longitude: coords.1)
-                annotation.title = user.getName()
-                //Supposed to check if the annotation already exists
-                if (!shownAnnotation.contains() { (check) -> Bool in
-                    if (check.title! == annotation.title) {
-                        
-                        return true
-                    }
-                    return false
-                }) {
-                    self.mapView.addAnnotation(annotation)
-                }//End of check
-                
+            
+            //Turn the users array into an array of UserAnnotations
+            var userAnnotations = users.map({user in
+                UserAnnotation(user: user)
+            })
+            
+            //If there are no shown annotations, just add in all the users
+            if (self.mapView.annotations.isEmpty) {
+                self.mapView.addAnnotations(userAnnotations)
+                //No need to continue on this run
+                return
             }
+            
+            //We need to delete users from mapView.annotations that the server is no longer reporting
+            
+            
+            //This will update the shown users location
+            for user in userAnnotations {
+                //Loop through shown annotations
+                for existingAnnotation in self.mapView.annotations {
+                    //Cast annotation to UserAnnotation because coordinate is get only in MKAnnotation
+                    if let annotation = existingAnnotation as? UserAnnotation {
+                        //Check if the user to add has the same title as the annotation
+                        if (user.title == annotation.title) {
+                            //Change the coordinate
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: user.coordinate.latitude, longitude: user.coordinate.longitude)
+                            //Remove the updated user from the array since the next step is adding in not shown users, don't want to add in people twice
+                            //Optional can be forced unwrapped because if the if statement progresed to here, user is an actual object
+                            userAnnotations.remove(at: userAnnotations.index(of: user)!)
+                        }
+                    }
+                }
+            }
+            
+            //userAnnotations now contains the users that are new so add them in
+            self.mapView.addAnnotations(userAnnotations)
+            
+            //Finished updating users
         }
-        NSLog("Successful nearby user update")
+        
     }
     
     //The function to be called when the callout bubble on an annotation is pressed
@@ -169,6 +190,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         view.addGestureRecognizer(tap)
     }
     
+    //Adds image to the annotation callout
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        print("delegate called")
         if (annotation is MKUserLocation) {

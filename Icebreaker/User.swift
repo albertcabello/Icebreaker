@@ -8,13 +8,13 @@
 
 import Foundation
 
-class User: Equatable, Hashable {
+class User: NSObject {
     private var name:String
     private var desc:String
     private var lat:Double
     private var long:Double
     
-    var hashValue: Int {
+    override var hashValue: Int {
         return name.hashValue
     }
     
@@ -23,6 +23,7 @@ class User: Equatable, Hashable {
         self.desc = desc
         self.lat = lat
         self.long = long
+
     }
     
     func setName(name names:String) {
