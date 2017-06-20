@@ -12,7 +12,7 @@
 		DA4F999A1DDB817E000DDC68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F99981DDB817E000DDC68 /* Main.storyboard */; };
 		DA4F999C1DDB817E000DDC68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999B1DDB817E000DDC68 /* Assets.xcassets */; };
 		DA4F999F1DDB817E000DDC68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4F999D1DDB817E000DDC68 /* LaunchScreen.storyboard */; };
-		DA8DD9EF1EF6F20400138BAE /* UserAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD9EE1EF6F20400138BAE /* UserAnnotation.swift */; };
+		DA8DD9F11EF709A900138BAE /* UserAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD9F01EF709A900138BAE /* UserAnnotation.swift */; };
 		DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA399F81E72FFBA00D6E7F4 /* NetworkController.swift */; };
 		DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355CF1DDB825500909B6F /* LoginViewController.swift */; };
 		DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D11DDB827700909B6F /* MapViewController.swift */; };
@@ -32,7 +32,7 @@
 		DA4F999B1DDB817E000DDC68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4F999E1DDB817E000DDC68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4F99A01DDB817E000DDC68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA8DD9EE1EF6F20400138BAE /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAnnotation.swift; sourceTree = "<group>"; };
+		DA8DD9F01EF709A900138BAE /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotation.swift; path = Icebreaker/UserAnnotation.swift; sourceTree = "<group>"; };
 		DAA399F81E72FFBA00D6E7F4 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		DAB355CF1DDB825500909B6F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DAB355D11DDB827700909B6F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				DAFCA3F51E789F9F001AAB96 /* User.swift */,
-				DA8DD9EE1EF6F20400138BAE /* UserAnnotation.swift */,
+				DA8DD9F01EF709A900138BAE /* UserAnnotation.swift */,
 			);
 			name = Models;
 			path = ..;
@@ -261,12 +261,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */,
+				DA8DD9F11EF709A900138BAE /* UserAnnotation.swift in Sources */,
 				DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */,
 				DAFCA3F61E789F9F001AAB96 /* User.swift in Sources */,
 				DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */,
 				DA4F99951DDB817E000DDC68 /* AppDelegate.swift in Sources */,
 				DAB355D21DDB827700909B6F /* MapViewController.swift in Sources */,
-				DA8DD9EF1EF6F20400138BAE /* UserAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

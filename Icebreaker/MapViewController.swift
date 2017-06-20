@@ -16,6 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var networkController:NetworkController!
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
+    private var shownUsers: [String: UserAnnotation] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,50 +132,46 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     /*
      * This function will get all nearby users based on the given username and password
-     * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
+     * This function has three primary steps
+     * 1) Delete any users that are no longer in range or not active
+     * 2) Update the users that are still shown and moving
+     * 3) Add in any new users 
+     * I may end up making the change in annotation coordinates an animation instead of a jump
      */
     func showNearbyUsers() {
         networkController.getNearbyUsers() { users in
+            //Delete the entire dictionary
+            self.shownUsers.removeAll()
             
-            //Turn the users array into an array of UserAnnotations
-            var userAnnotations = users.map({user in
-                UserAnnotation(user: user)
-            })
-            
-            //If there are no shown annotations, just add in all the users
-            if (self.mapView.annotations.isEmpty) {
-                self.mapView.addAnnotations(userAnnotations)
-                //No need to continue on this run
-                return
+            //This block will readd in all the users
+            for user in users {
+                let annotation = UserAnnotation(user: user)
+                NSLog(user.getName())
+                self.shownUsers[user.getName()] = annotation
             }
             
-            //We need to delete users from mapView.annotations that the server is no longer reporting
+            //If the mapview has no annotations, just add all of them in 
+            if (self.mapView.annotations.isEmpty) {
+                self.mapView.addAnnotations(Array(self.shownUsers.values))
+            }
             
-            
-            //This will update the shown users location
-            for user in userAnnotations {
-                //Loop through shown annotations
-                for existingAnnotation in self.mapView.annotations {
-                    //Cast annotation to UserAnnotation because coordinate is get only in MKAnnotation
-                    if let annotation = existingAnnotation as? UserAnnotation {
-                        //Check if the user to add has the same title as the annotation
-                        if (user.title == annotation.title) {
-                            //Change the coordinate
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: user.coordinate.latitude, longitude: user.coordinate.longitude)
-                            //Remove the updated user from the array since the next step is adding in not shown users, don't want to add in people twice
-                            //Optional can be forced unwrapped because if the if statement progresed to here, user is an actual object
-                            userAnnotations.remove(at: userAnnotations.index(of: user)!)
-                        }
+            //This block will update the shown annotations
+            //Loop through all the shown annotations
+            for existingAnnotation in self.mapView.annotations {
+                //Cast the existing annotation to the UserAnnotation because the coordinate property of MKAnnotation is get only
+                if let annotation = existingAnnotation as? UserAnnotation {
+                    //Check if the shownUsers dictionary contains the annotation and the updated coordinates
+                    if let updatedCoordinates = self.shownUsers[annotation.title!]?.coordinate {
+                        annotation.coordinate = updatedCoordinates
+                    }
+                    //If the dictionary didn't have the updated coordinates, that means the user was removed from the dictionary so remove 
+                    //it from the map
+                    else {
+                        self.mapView.removeAnnotation(annotation)
                     }
                 }
             }
-            
-            //userAnnotations now contains the users that are new so add them in
-            self.mapView.addAnnotations(userAnnotations)
-            
-            //Finished updating users
         }
-        
     }
     
     //The function to be called when the callout bubble on an annotation is pressed
@@ -196,7 +193,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if (annotation is MKUserLocation) {
             return nil
         }
-        let reuseId = annotation.title!!
+        let reuseId = "userAnnotation"
         var anview = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
         anview?.canShowCallout = true
         if (anview == nil) {

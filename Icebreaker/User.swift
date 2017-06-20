@@ -47,7 +47,8 @@ class User: NSObject {
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return ((lhs.getName() == rhs.getName()) && (lhs.getCoordinates() == rhs.getCoordinates()))
+        return lhs.getName() == rhs.getName()
     }
+    
     
 }

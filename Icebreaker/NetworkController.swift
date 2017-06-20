@@ -78,6 +78,8 @@ class NetworkController {
                 self.users.append(user)
             }
             completion(self.users)
+            //If you don't remove clear the users, as I spent two days debugging, on subsequent calls, the user never goes away
+            self.users.removeAll()
         }
     }
     
