@@ -47,12 +47,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         logoView.image = logo
         logoView.center.x = self.view.center.x
         
-        
-        
-        
-        
-        
-        
         //Username and password text field intializers
         //Sets the delegate, the style, and placeholder
         usrField.delegate = self

@@ -16,7 +16,7 @@ class NetworkController {
     var userGiven:String
     var email:String
     var action:String
-    var users = [User]()
+    var users: [User] = [] //The set of users coming from the server, not guaranteed to be the same as what is shown on the map currently
     
     init() {
         passGiven = ""
@@ -78,6 +78,8 @@ class NetworkController {
                 self.users.append(user)
             }
             completion(self.users)
+            //If you don't remove clear the users, as I spent two days debugging, on subsequent calls, the user never goes away
+            self.users.removeAll()
         }
     }
     
@@ -85,7 +87,8 @@ class NetworkController {
         let url = "http://albertocabello.com/Icebreaker-API/?action=update&userGiven=\(self.userGiven)&passGiven=\(self.passGiven)&latitude=\(latitude)&longitude=\(longitude)"
         Alamofire.request(url).responseString { response in
             if response.result.value == "1" {
-                NSLog("Successful coordinate update")
+                //NSLog("Successful coordinate update")
+                
                 completion(1)
             }
             else {
@@ -95,6 +98,26 @@ class NetworkController {
         }
         
 
+    }
+    
+    func uploadImage(image: UIImage) {
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(UIImagePNGRepresentation(image)!, withName: "image", fileName: "image.png", mimeType: "image/png")
+            },
+            to: "http://localhost:8000/upload.php",
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString() { response in
+                        print(response)
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+            }
+        )
+        
     }
     
     func setUsername(user:String) {

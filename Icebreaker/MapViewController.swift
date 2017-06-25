@@ -16,6 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var networkController:NetworkController!
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
+    private var shownUsers: [String: UserAnnotation] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //Set up the map and its type
         mapView.mapType = .standard
         mapView.delegate = self
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isRotateEnabled = false
         //Request location services access
         locationManager.requestAlwaysAuthorization()
         
@@ -50,10 +54,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //Checks for whether location services is enabled
         if CLLocationManager.authorizationStatus() == .denied {
             //Create the UIAction that opens settings
-            
-            
-            //So going back after around two months of doing this, I have no idea why that handler works.  What does the compiler
-            //think (action) is?  Oh well, I'll figure it out later 
+        
             let settings = UIAlertAction(title: "Settings", style: .default) { (action) in
                 if let appSetting = URL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.shared.open(appSetting)
@@ -65,10 +66,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
         }
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            let userLocation = locationManager.location     //The users location as a CLLocation Object
-            let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
-            let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
-            let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
+//            let userLocation = locationManager.location     //The users location as a CLLocation Object
+//            let coordinates = userLocation?.coordinate      //The users location as a CLLocationCoordinate2D Object
+//            let longitude = coordinates?.longitude          //The users longitude as a CLLocationDegrees Object
+//            let latitude = coordinates?.latitude            //The users latitude as a CLLocationDegrees Object
             
             
             //Update the MySQL coordinates with actual coordinates
@@ -76,14 +77,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             //Initialize the latitude and longitude labels
             
-            let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
-            latLabel.text = "Latitude: " + (latitude?.description)!   //Turn latitude into a string
-            latLabel.backgroundColor = UIColor.white
-            print("latLabel set")
-            let longLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 90.0, width: self.view.frame.width - 40.0, height: 30.0))
-            longLabel.text = "Longitude: " + (longitude?.description)! //Turn latitude into a string
-            longLabel.backgroundColor = UIColor.white
-            print("longLabel set")
+//            let latLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 60.0, width: self.view.frame.width - 40.0, height: 30.0))
+//            latLabel.text = "Latitude: " + (latitude?.description)!   //Turn latitude into a string
+//            latLabel.backgroundColor = UIColor.white
+//            print("latLabel set")
+//            let longLabel = UILabel(frame: CGRect(x: 20.0, y: self.view.frame.height - 90.0, width: self.view.frame.width - 40.0, height: 30.0))
+//            longLabel.text = "Longitude: " + (longitude?.description)! //Turn latitude into a string
+//            longLabel.backgroundColor = UIColor.white
+//            print("longLabel set")
             
             //Adds the longitude and latitude labels to the view
             //self.view.addSubview(latLabel); self.view.addSubview(longLabel); print("latLabel and longLabel added to view")
@@ -92,15 +93,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             var _ = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { (Timer) in
                 self.updateServer()
                 self.showNearbyUsers()})
-            
-            
         }
         
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        mapView.setCenter(locations[locations.endIndex - 1].coordinate, animated: true)
-    }
+    
     
     //Sets the map to start tracking the user with heading enabled
     func loadMap() {
@@ -135,32 +132,47 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     /*
      * This function will get all nearby users based on the given username and password
-     * There is no error handling in case of bad username, password, or action because I made the API and know that this url works
+     * This function has three primary steps
+     * 1) Delete any users that are no longer in range or not active
+     * 2) Update the users that are still shown and moving
+     * 3) Add in any new users 
+     * I may end up making the change in annotation coordinates an animation instead of a jump
      */
     func showNearbyUsers() {
-        let shownAnnotation = mapView.annotations
         networkController.getNearbyUsers() { users in
+            //Delete the entire dictionary
+            self.shownUsers.removeAll()
+            
+            //This block will readd in all the users
             for user in users {
-                var annotation = MKPointAnnotation()
-                let coords = user.getCoordinates()
-                annotation.coordinate = CLLocationCoordinate2D(latitude: coords.0 , longitude: coords.1)
-                annotation.title = user.getName()
-                //Supposed to check if the annotation already exists
-                if (!shownAnnotation.contains() { (check) -> Bool in
-                    if (check.title! == annotation.title) {
-                        NSLog("Match exists, old coords: \(annotation.coordinate)" )
-                        annotation = check as! MKPointAnnotation
-                        NSLog("New coords: \(annotation.coordinate)")
-                        return true
+                let annotation = UserAnnotation(user: user)
+                self.shownUsers[user.getName()] = annotation
+            }
+            
+            //If the mapview has no annotations, just add all of them in 
+            if (self.mapView.annotations.isEmpty) {
+                self.mapView.addAnnotations(Array(self.shownUsers.values))
+            }
+            
+            //This block will update the shown annotations
+            //Loop through all the shown annotations
+            for existingAnnotation in self.mapView.annotations {
+                //Cast the existing annotation to the UserAnnotation because the coordinate property of MKAnnotation is get only
+                if let annotation = existingAnnotation as? UserAnnotation {
+                    //Check if the shownUsers dictionary contains the annotation and the updated coordinates
+                    if let updatedCoordinates = self.shownUsers[annotation.title!]?.coordinate {
+                        UIView.animate(withDuration: 5) { Void in
+                            annotation.coordinate = updatedCoordinates
+                        }
                     }
-                    return false
-                }) {
-                    self.mapView.addAnnotation(annotation)
-                }//End of check
-                
+                    //If the dictionary didn't have the updated coordinates, that means the user was removed from the dictionary so remove 
+                    //it from the map
+                    else {
+                        self.mapView.removeAnnotation(annotation)
+                    }
+                }
             }
         }
-        NSLog("Successful nearby user update")
     }
     
     //The function to be called when the callout bubble on an annotation is pressed
@@ -176,12 +188,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         view.addGestureRecognizer(tap)
     }
     
+    //Adds image to the annotation callout
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        print("delegate called")
         if (annotation is MKUserLocation) {
             return nil
         }
-        let reuseId = annotation.title!!
+        let reuseId = "userAnnotation"
         var anview = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
         anview?.canShowCallout = true
         if (anview == nil) {
@@ -200,6 +213,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
 //        print("Returning view")
         return anview
+    }
+    
+    //Detecs when the button is called
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        //The button on the user location was tapped
+        if (view.annotation is MKUserLocation) {
+            let nvc = UINavigationController(rootViewController: self)
+            let profileView = ProfileViewController()
+            profileView.networkController = networkController
+            profileView.nvc = nvc
+            self.present(profileView, animated: true, completion: nil)
+        }
+    }
+    
+    //Adds a button to the user annotation, NOT THE PINS
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views {
+            if (view.annotation is MKUserLocation) {
+                let anview = view
+                let profileButton = UIButton(type: .detailDisclosure)
+                anview.rightCalloutAccessoryView = profileButton
+            }
+        }
     }
     
     /*

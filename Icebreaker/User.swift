@@ -8,17 +8,22 @@
 
 import Foundation
 
-class User: Equatable {
+class User: NSObject {
     private var name:String
     private var desc:String
     private var lat:Double
     private var long:Double
+    
+    override var hashValue: Int {
+        return name.hashValue
+    }
     
     init(name:String, desc:String = "", lat:Double, long:Double) {
         self.name = name
         self.desc = desc
         self.lat = lat
         self.long = long
+
     }
     
     func setName(name names:String) {
@@ -42,7 +47,8 @@ class User: Equatable {
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return ((lhs.getName() == rhs.getName()) && (lhs.getCoordinates() == rhs.getCoordinates()))
+        return lhs.getName() == rhs.getName()
     }
+    
     
 }
