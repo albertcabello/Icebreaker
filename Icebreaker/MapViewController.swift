@@ -146,7 +146,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             //This block will readd in all the users
             for user in users {
                 let annotation = UserAnnotation(user: user)
-                NSLog(user.getName())
                 self.shownUsers[user.getName()] = annotation
             }
             
@@ -162,7 +161,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 if let annotation = existingAnnotation as? UserAnnotation {
                     //Check if the shownUsers dictionary contains the annotation and the updated coordinates
                     if let updatedCoordinates = self.shownUsers[annotation.title!]?.coordinate {
-                        annotation.coordinate = updatedCoordinates
+                        UIView.animate(withDuration: 5) { Void in
+                            annotation.coordinate = updatedCoordinates
+                        }
                     }
                     //If the dictionary didn't have the updated coordinates, that means the user was removed from the dictionary so remove 
                     //it from the map
@@ -212,6 +213,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
 //        print("Returning view")
         return anview
+    }
+    
+    //Detecs when the button is called
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        //The button on the user location was tapped
+        if (view.annotation is MKUserLocation) {
+            let nvc = UINavigationController(rootViewController: self)
+            let profileView = ProfileViewController()
+            profileView.networkController = networkController
+            profileView.nvc = nvc
+            self.present(profileView, animated: true, completion: nil)
+        }
+    }
+    
+    //Adds a button to the user annotation, NOT THE PINS
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views {
+            if (view.annotation is MKUserLocation) {
+                let anview = view
+                let profileButton = UIButton(type: .detailDisclosure)
+                anview.rightCalloutAccessoryView = profileButton
+            }
+        }
     }
     
     /*

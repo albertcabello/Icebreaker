@@ -19,6 +19,7 @@
 		DAB355D41DDB82BE00909B6F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DAB355D31DDB82BE00909B6F /* Podfile */; };
 		DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB355D51DDB82F000909B6F /* NewUserViewController.swift */; };
 		DAC683EB1E510B5200655923 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DAC683EA1E510B5200655923 /* Logo.png */; };
+		DAC693271EFC8039001FDF0F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC693261EFC8039001FDF0F /* ProfileViewController.swift */; };
 		DAFCA3F61E789F9F001AAB96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCA3F51E789F9F001AAB96 /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		DAB355D31DDB82BE00909B6F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DAB355D51DDB82F000909B6F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		DAC683EA1E510B5200655923 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		DAC693261EFC8039001FDF0F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DAFCA3F51E789F9F001AAB96 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Icebreaker/User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +132,7 @@
 				DAB355D11DDB827700909B6F /* MapViewController.swift */,
 				DAB355CF1DDB825500909B6F /* LoginViewController.swift */,
 				DAB355D51DDB82F000909B6F /* NewUserViewController.swift */,
+				DAC693261EFC8039001FDF0F /* ProfileViewController.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			files = (
 				DAB355D01DDB825500909B6F /* LoginViewController.swift in Sources */,
 				DA8DD9F11EF709A900138BAE /* UserAnnotation.swift in Sources */,
+				DAC693271EFC8039001FDF0F /* ProfileViewController.swift in Sources */,
 				DAB355D61DDB82F000909B6F /* NewUserViewController.swift in Sources */,
 				DAFCA3F61E789F9F001AAB96 /* User.swift in Sources */,
 				DAA399F91E72FFBA00D6E7F4 /* NetworkController.swift in Sources */,

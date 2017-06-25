@@ -88,6 +88,7 @@ class NetworkController {
         Alamofire.request(url).responseString { response in
             if response.result.value == "1" {
                 //NSLog("Successful coordinate update")
+                
                 completion(1)
             }
             else {
@@ -97,6 +98,26 @@ class NetworkController {
         }
         
 
+    }
+    
+    func uploadImage(image: UIImage) {
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(UIImagePNGRepresentation(image)!, withName: "image", fileName: "image.png", mimeType: "image/png")
+            },
+            to: "http://localhost:8000/upload.php",
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseString() { response in
+                        print(response)
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+            }
+        )
+        
     }
     
     func setUsername(user:String) {
